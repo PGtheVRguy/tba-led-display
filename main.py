@@ -17,7 +17,9 @@ options.chain_length = 1
 options.hardware_mapping = 'regular'
 options.drop_privileges = False
 options.brightness = 75
-#options.pwm_lsb_nanoseconds = 3000
+#options.disabled_rt_throttled = True
+#options.pwm_lsb_nanoseconds = 50
+#options.disable_hardware_pulsing = True
 #draw = ImageDraw.Draw(image)
 
 startTimer = time.time()
@@ -31,6 +33,9 @@ switched = False
 
 red = (140, 15, 25)
 blue = (0, 117, 62)
+
+#red = (255,0,0)
+#blue = (0,255,0)
 
 tba = tbapy.TBA("DTMnL4hL8CpDwSj65VEJWEy5q9nE1yNZbFQKL1rvMVo9fBZt1Vwo8Ui0vGnhRxPC")
 
@@ -115,6 +120,11 @@ def getTeam(alliance):
     return side
 
 
+
+def matchesWePlay(teamNum):
+    
+    mat = tba.match(eventKey, )
+
 switched = False
 matchesSlide = 0
 #draw.rectangle()
@@ -159,16 +169,29 @@ while True:
 
 
 
-    #drawing the matche stuff
-    for x in range(amountOfMatches):
+    #drawing the match stuff
+    for ox in range(amountOfMatches):
+        x = ox
         side = getTeam(match[x].alliances)
-        string = match[x].alliances[side]['score']
+        string = str(match[x].alliances[side]['score'])
+        mn = str(match[x]['match_number'])
+
+        if(len(mn) == 1):
+            mn = "0" + mn
+
+        string = mn + ":" + string
+
+        
         if(side == 'red'):
             color = red
         else:
             color = blue
         draw.rectangle((41, 4+(7*x)+(-sideLength+32)+matchesSlide, 64, (7*x)+10+(-sideLength+32)+matchesSlide), fill = color)
         draw_text((42,0+(7*x)+(-sideLength+32)+matchesSlide), str(string),fnt5x3, (255,255,255), align = "left")
+    
+    
+
+
     if(state == "showMatches"):
         matchesSlide -= 0.2
         #print(abs(matchesSlide))
