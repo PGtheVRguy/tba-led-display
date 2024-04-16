@@ -17,4 +17,9 @@ Note: This is still just me messing around with the libraries, support for displ
 
 If you have any issues, please file an issue. The code isn't great as it's my first time messing with Python, but I hope it works well enough!
 
-This was NOT made on behalf of First Robotics or The Blue Alliance, all trademarks belong to them and other legal stuff similar to that. I just wanna have a cool way to view matches :3
+
+Made by Noah/PGtheVRguy (who's on FRC 7211 >:3)
+
+
+
+This was NOT made on behalf/affiliated of/with First Robotics or The Blue Alliance, all trademarks belong to them and other legal stuff similar to that. I just wanna have a cool way to view matches :3
