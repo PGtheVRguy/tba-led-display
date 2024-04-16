@@ -5,7 +5,9 @@ from PIL import ImageDraw
 from PIL import ImageFont
 import time
 import io
-
+import variables as v
+from functions import sortMatches
+import sys
 #import picamera
 
 #defining the rgb-matrix
@@ -41,13 +43,35 @@ tba = tbapy.TBA("DTMnL4hL8CpDwSj65VEJWEy5q9nE1yNZbFQKL1rvMVo9fBZt1Vwo8Ui0vGnhRxP
 
 
 team = "frc7211"
-eventKey = "2024miwmi"
-match = tba.team_matches(team, eventKey)
+eventKey = "2024micmp2"#"2024miwmi"
 
+
+#arguments
+
+#sys.argv = ['main.py', 'teamNum']
+print(sys.argv[1])
+team = sys.argv[1]
+eventKey = sys.argv[2]
+
+
+match = tba.team_matches(team, eventKey)
+v.matches = match #nice to have as its own thing in v
+v.tba = tba
+v.team = team
+v.eventKey = eventKey
 amountOfMatches = len(match[-1])
+#print(amountOfMatches)
+#print(match[11])
+
+
+
+
 
 for x in range(amountOfMatches):
     lastMatch = x
+    if(x >= len(match)):
+        lastMatch -= 1
+        break
     if match[x].alliances['red']['score'] == -1:
         lastMatch -= 1
         break
@@ -128,7 +152,13 @@ def matchesWePlay(teamNum):
 switched = False
 matchesSlide = 0
 #draw.rectangle()
-while True:
+
+
+sortMatches("qm")
+sortMatches("sf")
+sortMatches("f")
+
+while True: # MAIN LOOP // MAIN LOOP // MAIN LOOP // MAIN LOOP // MAIN LOOP // MAIN LOOP // MAIN LOOP // MAIN LOOP // MAIN LOOP // 
     currentTime = time.time()
     elapsedTime = currentTime - startTimer
 
@@ -170,14 +200,20 @@ while True:
 
 
     #drawing the match stuff
-    for ox in range(amountOfMatches):
+    for ox in range(len(v.matchList)):
         x = ox
-        side = getTeam(match[x].alliances)
-        string = str(match[x].alliances[side]['score'])
-        mn = str(match[x]['match_number'])
+        match = v.qmDataList[x]
+        side = getTeam(match.alliances)
+        string = str(match.alliances[side]['score'])
+        mn = str(match['match_number'])
+        matchType = match['comp_level']
 
         if(len(mn) == 1):
             mn = "0" + mn
+        if(matchType == "sf"):
+            mn = "sf"
+        if(matchType == "f"):
+            mn = "f"
 
         string = mn + ":" + string
 
@@ -224,17 +260,6 @@ while True:
     else:
         draw_text((64-blueLength/2, 1), "US", fnt5x3, (255,255,255), align = "center")
 
-
-    #stream = io.BytesIO()
-    #with picamera.PiCamera() as camera:
-    #    camera.start_preview()
-    #    camera.capture(stream, format = "jpeg")
-#
-    #stream.seek(0)
-    
-
-
-    #matrix.SetImage(img)
 
     matrix.SetImage(image)
     time.sleep(0.05)
