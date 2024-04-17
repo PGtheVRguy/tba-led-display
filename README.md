@@ -2,12 +2,12 @@ A utilization of the rpi-rgb-led-matrix and tbapy libraries for python.
 
 With this repo, a 64x32 rgb led matrix can display data pulled from The Blue Alliance! Simply run the command
 ```
-sudo python3 main.py [teamNum] [comp]
+sudo python3 main.py frc[teamNum] [comp]
 ```
 
 Example:
 ```
-sudo python3 main.py 7211 2024miwmi
+sudo python3 main.py frc7211 2024miwmi
 ```
 
 It's as easy as that! This should work with most competitions and possibly even currently running ones! 
